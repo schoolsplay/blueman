@@ -1,0 +1,18 @@
+# Additional stuff when building this
+
+# See also the README.blue in project XrandKivy for deploy stuff
+
+- Setup a virt py3.8, see requirements.txt
+- sudo apt install python-gi-dev libbluetooth-dev bluez libcairo2-dev libgirepository1.0-dev cython3
+- to run I also needed pulseaudio-module-bluetooth
+- PYTHON=/home/stas/Github/SchoolsplayRepos/blueman/.venv3.8/bin/python3.8 ./autogen.sh --prefix=/home/stas/Github/SchoolsplayRepos/blueman/.venv3.8
+- make && make install
+- mkdir .venv3.8/lib/python3.8/site-packages/data
+- cp -r ~/Github/SchoolsplayRepos/blueman/data/ui .venv3.8/lib/python3.8/site-packages/data/
+- cp -r ~/Github/SchoolsplayRepos/blueman/data/icons .venv3.8/lib/python3.8/site-packages/data/
+- find .venv3.8/lib/python3.8/site-packages/data -name "Makefile*" -exec rm {} \;
+- find .venv3.8/lib/python3.8/site-packages/data -type d -name "build" -exec rm {} \;
+
+# test the install
+-  export BLUEMAN_SOURCE=true; .venv3.8/bin/python3.8 .venv3.8/bin/blueman-manager
+- copy whole .venv3.8 to github project SchoolsplayRepos/XrandKivy/blueman

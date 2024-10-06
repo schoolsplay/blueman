@@ -22,3 +22,4 @@ if 'BLUEMAN_SOURCE' in os.environ:
     ICON_PATH = os.path.join(_dirname, 'data', 'icons')
     PIXMAP_PATH = os.path.join(_dirname, 'data', 'icons', 'pixmaps')
     UI_PATH = os.path.join(_dirname, 'data', 'ui')
+    LOCALEDIR = os.path.join(_dirname, 'data', 'locale')
