@@ -33,7 +33,7 @@ cp -rf .venv3.8/lib/python3.8/site-packages/blueman release/.venv3.8/lib/python3
 cp -rf .venv3.8/lib/python3.8/site-packages/cairo release/.venv3.8/lib/python3.8/site-packages/
 cp -rf .venv3.8/lib/python3.8/site-packages/gi release/.venv3.8/lib/python3.8/site-packages
 cp -rf .venv3.8/lib/python3.8/site-packages/pygtkcompat release/.venv3.8/lib/python3.8/site-packages/
-cp -f .venv3.8/lib/python3.8/site-packages/_blueman.so release/.venv3.8/lib/python3.8/site-packages/
+cp -f ~/Github/SchoolsplayRepos/blueman/module/.libs/_blueman.so release/.venv3.8/lib/python3.8/site-packages/
 cp -rf .venv3.8/libexec release/.venv3.8/
 cp -f .venv3.8/bin/blueman-manager release/.venv3.8/bin/
 
