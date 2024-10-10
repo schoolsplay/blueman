@@ -62,14 +62,16 @@ def show_about_dialog(app_name: str, run: bool = True, parent: Optional[Gtk.Wind
                         'Copyright © 2008 Tadas Dailyda\n'
                         f'Copyright © 2008 - {datetime.now().year} blueman project'
                         )
-    about.set_comments(_('Blueman is a GTK+ Bluetooth manager'))
+    test_lines = ["line 1\n", "line 2\n", "line 3\n", "line 4\n", "line 5\n", "line 6\n", "line 7\n", "line 8\n"]
+    about.set_comments(_('Blueman is a GTK+ Bluetooth manager' + '\n'+ "Now edited for use on BTP machines.\n" + ",".join(test_lines)))
     about.set_website(WEBSITE)
     about.set_website_label(WEBSITE)
     about.set_icon_name('blueman')
     about.set_logo_icon_name('blueman')
     about.set_authors(['Valmantas Palikša <walmis@balticum-tv.lt>',
                        'Tadas Dailyda <tadas@dailyda.com>',
-                       f'{WEBSITE}/graphs/contributors'
+                       f'{WEBSITE}/graphs/contributors',
+                       'For BTP+ <hj@btp.nl>'
                        ])
     if run:
         about.show()

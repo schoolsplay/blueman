@@ -37,8 +37,9 @@ class ManagerMenu:
         self.item_view = self.blueman.builder.get_widget("item_view", Gtk.MenuItem)
         self.item_help = self.blueman.builder.get_widget("item_help", Gtk.MenuItem)
 
-        report_item = blueman.builder.get_widget("report", Gtk.ImageMenuItem)
-        report_item.connect("activate", lambda x: launch(f"xdg-open {WEBSITE}/issues"))
+        # stas: removed this menu item in the gui
+        # report_item = blueman.builder.get_widget("report", Gtk.ImageMenuItem)
+        # report_item.connect("activate", lambda x: launch(f"xdg-open {WEBSITE}/issues"))
 
         help_item = blueman.builder.get_widget("help", Gtk.ImageMenuItem)
         assert self.blueman.window is not None

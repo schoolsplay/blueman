@@ -27,11 +27,6 @@
     <property name="can-focus">False</property>
     <property name="icon-name">document-properties-symbolic</property>
   </object>
-  <object class="GtkImage" id="im_report">
-    <property name="visible">True</property>
-    <property name="can-focus">False</property>
-    <property name="icon-name">dialog-warning-symbolic</property>
-  </object>
   <object class="GtkImage" id="im_search">
     <property name="visible">True</property>
     <property name="can-focus">False</property>
@@ -247,22 +242,6 @@
                     <property name="visible">True</property>
                     <property name="can-focus">False</property>
                     <child>
-                      <object class="GtkImageMenuItem" id="report">
-                        <property name="label" translatable="yes">_Report a Problem</property>
-                        <property name="visible">True</property>
-                        <property name="can-focus">False</property>
-                        <property name="use-underline">True</property>
-                        <property name="image">im_report</property>
-                        <property name="use-stock">False</property>
-                      </object>
-                    </child>
-                    <child>
-                      <object class="GtkSeparatorMenuItem" id="sep_help">
-                        <property name="visible">True</property>
-                        <property name="can-focus">False</property>
-                      </object>
-                    </child>
-                    <child>
                       <object class="GtkImageMenuItem" id="help">
                         <property name="label" translatable="yes">_Help</property>
                         <property name="visible">True</property>
@@ -373,6 +352,8 @@
                 <property name="can-focus">False</property>
                 <property name="no-show-all">True</property>
                 <property name="tooltip-text" translatable="yes">Send file(s) to the device</property>
+                <property name="visible-horizontal">False</property>
+                <property name="visible-vertical">False</property>
                 <property name="is-important">True</property>
                 <property name="label" translatable="yes" comments="translators: toolbar item: keep it as short as possible">Send File</property>
                 <property name="icon-name">blueman-send-symbolic</property>
@@ -380,17 +361,6 @@
               <packing>
                 <property name="expand">False</property>
                 <property name="homogeneous">True</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkSeparatorToolItem" id="spacer">
-                <property name="visible">True</property>
-                <property name="can-focus">False</property>
-                <property name="draw">False</property>
-              </object>
-              <packing>
-                <property name="expand">True</property>
-                <property name="homogeneous">False</property>
               </packing>
             </child>
             <child>
