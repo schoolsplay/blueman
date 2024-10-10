@@ -14,5 +14,11 @@
 - find .venv3.8/lib/python3.8/site-packages/data -type d -name "build" -exec rm {} \;
 
 # test the install
--  export BLUEMAN_SOURCE=true; .venv3.8/bin/python3.8 .venv3.8/bin/blueman-manager
-- copy whole .venv3.8 to github project SchoolsplayRepos/XrandKivy/blueman
+Be aware as we build on a VM we don't have a bluetooth device so we can only test the GUI, minimal.
+- export BLUEMAN_SOURCE=true; .venv3.8/bin/python3.8 .venv3.8/bin/blueman-manager
+- cp -f ~/Github/SchoolsplayRepos/blueman/module/.libs/_blueman.so .venv3.8/lib/python3.8/site-packages/
+- ./make_btp_release.sh
+- export BLUEMAN_SOURCE=true; .venv3.8/bin/python3.8 .venv3.8/bin/blueman-manager
+
+# Build a btp release
+- run: ./make_btp_release.sh
