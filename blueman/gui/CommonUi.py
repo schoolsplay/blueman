@@ -1,10 +1,19 @@
+import logging
 from datetime import datetime
 from gettext import gettext as _
 from typing import Optional, overload, TYPE_CHECKING
 
+from gi.overrides.GLib import GLib
+
 from blueman.Constants import WEBSITE, VERSION
 
 import gi
+
+from blueman.bluez.Device import Device
+from blueman.gui.manager.ManagerDeviceMenu import ManagerDeviceMenu
+from blueman.gui.manager.ManagerProgressbar import ManagerProgressbar
+from blueman.main.DBusProxies import DBusProxyFailed, AppletService
+
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
 
@@ -78,3 +87,4 @@ def show_about_dialog(app_name: str, run: bool = True, parent: Optional[Gtk.Wind
         return None
     else:
         return about
+

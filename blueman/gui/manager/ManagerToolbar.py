@@ -7,6 +7,7 @@ import gi
 
 from blueman.bluez.Adapter import Adapter
 from blueman.bluez.Device import Device
+from blueman.gui import BtConnect
 from blueman.gui.manager.ManagerDeviceList import ManagerDeviceList
 
 gi.require_version("Gtk", "3.0")
@@ -19,6 +20,8 @@ if TYPE_CHECKING:
 class ManagerToolbar:
     def __init__(self, blueman: "Blueman") -> None:
         self.blueman = blueman
+
+        self.btconnect = BtConnect.ConnectDevice(self.blueman)
 
         self.blueman.List.connect("device-selected", self.on_device_selected)
         self.blueman.List.connect("device-property-changed", self.on_device_propery_changed)
@@ -45,12 +48,20 @@ class ManagerToolbar:
         self.b_remove = blueman.builder.get_widget("b_remove", Gtk.ToolButton)
         self.b_remove.connect("clicked", self.on_action, self.blueman.remove)
 
-        self.b_send = blueman.builder.get_widget("b_send", Gtk.ToolButton)
-        self.b_send.props.sensitive = False
-        self.b_send.connect("clicked", self.on_action, self.blueman.send)
-        self.b_send.set_homogeneous(False)
+        # self.b_send = blueman.builder.get_widget("b_send", Gtk.ToolButton)
+        # self.b_send.props.sensitive = False
+        # self.b_send.connect("clicked", self.on_action, self.blueman.send)
+        # self.b_send.set_homogeneous(False)
+
+        self.b_connect = blueman.builder.get_widget("b_connect", Gtk.ToolButton)
+        self.b_connect.connect("clicked", self.on_bt_action, self.btconnect.connect_service)
 
         self.on_adapter_changed(blueman.List, blueman.List.get_adapter_path())
+
+    def on_bt_action(self, _button: Gtk.ToolButton, func) -> None:
+        device = self.blueman.List.get_selected_device()
+        if device is not None:
+            func(device)
 
     def on_action(self, _button: Gtk.ToolButton, func: Callable[[Device], None]) -> None:
         device = self.blueman.List.get_selected_device()
@@ -84,13 +95,15 @@ class ManagerToolbar:
             self.b_bond.props.sensitive = False
             self.b_trust.props.sensitive = False
             self.b_remove.props.sensitive = False
-            self.b_send.props.sensitive = False
+            #self.b_send.props.sensitive = False
+            self.b_connect.props.sensitive = False
         else:
             row = self.blueman.List.get(tree_iter, "paired", "trusted", "objpush")
             self.b_bond.props.sensitive = powered and not row["paired"]
             self.b_trust.props.sensitive = True
             self.b_remove.props.sensitive = True
-            self.b_send.props.sensitive = powered and row["objpush"]
+            #self.b_send.props.sensitive = powered and row["objpush"]
+            self.b_connect.props.sensitive = powered
 
             icon_name = "blueman-untrust-symbolic" if row["trusted"] else "blueman-trust-symbolic"
             self.b_trust.props.icon_widget = Gtk.Image(icon_name=icon_name, pixel_size=24, visible=True)

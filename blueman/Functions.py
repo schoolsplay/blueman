@@ -40,6 +40,7 @@ from blueman.main.DBusProxies import AppletService, DBusProxyFailed
 from blueman.Constants import BIN_DIR, ICON_PATH
 
 import gi
+
 gi.require_version("Gtk", "3.0")
 gi.require_version("Gdk", "3.0")
 from gi.repository import Gtk
@@ -48,7 +49,7 @@ from gi.repository import GdkPixbuf
 from gi.repository import Gio
 
 __all__ = ["check_bluetooth_status", "launch", "setup_icon_path", "adapter_path_to_name", "e_", "bmexit",
-           "format_bytes", "create_menuitem", "have", "set_proc_title", "create_logger", "create_parser", "open_rfcomm",
+           "format_bytes", "create_menuitem", "have", "set_proc_title", "create_parser", "open_rfcomm",
            "get_local_interfaces"]
 
 
@@ -85,12 +86,12 @@ def check_bluetooth_status(message: str, exitfunc: Callable[[], Any]) -> None:
 
 
 def launch(
-    cmd: str,
-    paths: Optional[Iterable[str]] = None,
-    system: bool = False,
-    icon_name: Optional[str] = None,
-    name: str = "blueman",
-    sn: bool = True,
+        cmd: str,
+        paths: Optional[Iterable[str]] = None,
+        system: bool = False,
+        icon_name: Optional[str] = None,
+        name: str = "blueman",
+        sn: bool = True,
 ) -> bool:
     """Launch a gui app with startup notification"""
     context = None
@@ -178,10 +179,10 @@ def format_bytes(size: float) -> Tuple[float, str]:
 
 
 def create_menuitem(
-    text: str,
-    icon_name: Optional[str] = None,
-    pixbuf: Optional[GdkPixbuf.Pixbuf] = None,
-    surface: Optional[cairo.Surface] = None,
+        text: str,
+        icon_name: Optional[str] = None,
+        pixbuf: Optional[GdkPixbuf.Pixbuf] = None,
+        surface: Optional[cairo.Surface] = None,
 ) -> Gtk.ImageMenuItem:
     image = Gtk.Image(pixel_size=16)
     if icon_name:
@@ -236,12 +237,12 @@ logger_date_fmt = '%H.%M.%S'
 
 
 def create_logger(
-    log_level: int,
-    name: str,
-    log_format: Optional[str] = None,
-    date_fmt: Optional[str] = None,
-    syslog: bool = False,
-) -> logging.Logger:
+        log_level: int,
+        name: str,
+        log_format: Optional[str] = None,
+        date_fmt: Optional[str] = None,
+        syslog: bool = False,
+        ) -> logging.Logger:
     if log_format is None:
         log_format = logger_format
     if date_fmt is None:
@@ -261,9 +262,9 @@ def create_logger(
 
 
 def create_parser(
-    parser: Optional[argparse.ArgumentParser] = None,
-    syslog: bool = True,
-    loglevel: bool = True,
+        parser: Optional[argparse.ArgumentParser] = None,
+        syslog: bool = True,
+        loglevel: bool = True,
 ) -> argparse.ArgumentParser:
     if parser is None:
         parser = argparse.ArgumentParser()

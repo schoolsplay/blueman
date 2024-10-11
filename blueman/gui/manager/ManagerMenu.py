@@ -41,6 +41,7 @@ class ManagerMenu:
         # report_item = blueman.builder.get_widget("report", Gtk.ImageMenuItem)
         # report_item.connect("activate", lambda x: launch(f"xdg-open {WEBSITE}/issues"))
 
+
         help_item = blueman.builder.get_widget("help", Gtk.ImageMenuItem)
         assert self.blueman.window is not None
         widget = self.blueman.window.get_toplevel()

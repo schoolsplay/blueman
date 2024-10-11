@@ -52,7 +52,7 @@
             <property name="visible">True</property>
             <property name="can-focus">False</property>
             <property name="margin-top">24</property>
-            <property name="margin-bottom">24</property>
+            <property name="margin-bottom">23</property>
             <child>
               <object class="GtkMenuItem" id="item_adapter">
                 <property name="visible">True</property>
@@ -290,6 +290,21 @@
               </packing>
             </child>
             <child>
+              <object class="GtkToolButton" id="b_connect">
+                <property name="width-request">100</property>
+                <property name="visible">True</property>
+                <property name="sensitive">False</property>
+                <property name="can-focus">False</property>
+                <property name="tooltip-text" translatable="yes">Connect audio output to the device</property>
+                <property name="label" translatable="yes" comments="translators: toolbar item: keep it as short as possible">Connect</property>
+                <property name="icon-name">bluetooth-symbolic</property>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="homogeneous">True</property>
+              </packing>
+            </child>
+            <child>
               <object class="GtkSeparatorToolItem" id="sep1">
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
@@ -348,22 +363,6 @@
               <object class="GtkSeparatorToolItem" id="sep2">
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
-              </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="homogeneous">True</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkToolButton" id="b_send">
-                <property name="can-focus">False</property>
-                <property name="no-show-all">True</property>
-                <property name="tooltip-text" translatable="yes">Send file(s) to the device</property>
-                <property name="visible-horizontal">False</property>
-                <property name="visible-vertical">False</property>
-                <property name="is-important">True</property>
-                <property name="label" translatable="yes" comments="translators: toolbar item: keep it as short as possible">Send File</property>
-                <property name="icon-name">blueman-send-symbolic</property>
               </object>
               <packing>
                 <property name="expand">False</property>
