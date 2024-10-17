@@ -19,6 +19,7 @@ if TYPE_CHECKING:
 
 class ManagerToolbar:
     def __init__(self, blueman: "Blueman") -> None:
+        self.logger = logging.getLogger("bm.ManagerToolbar")
         self.blueman = blueman
 
         self.btconnect = BtConnect.ConnectDevice(self.blueman)
@@ -55,6 +56,12 @@ class ManagerToolbar:
 
         self.b_connect = blueman.builder.get_widget("b_connect", Gtk.ToolButton)
         self.b_connect.connect("clicked", self.on_bt_action, self.btconnect.connect_service)
+        selected = self.blueman.List.selected()
+        if selected:
+            row = self.blueman.List.get(selected, "alias", "paired", "connected", "trusted", "objpush", "device",
+                                    "blocked")
+            if row['connected']:
+                self.b_connect.set_label(_("Disconnect"))
 
         self.on_adapter_changed(blueman.List, blueman.List.get_adapter_path())
 
@@ -75,7 +82,7 @@ class ManagerToolbar:
             self._update_buttons(adapter)
 
     def on_adapter_changed(self, _lst: ManagerDeviceList, adapter_path: Optional[ObjectPath]) -> None:
-        logging.debug(f"toolbar adapter {adapter_path}")
+        self.logger.debug(f"toolbar adapter {adapter_path}")
         self._update_buttons(None if adapter_path is None else Adapter(obj_path=adapter_path))
 
     def on_device_selected(
@@ -89,7 +96,6 @@ class ManagerToolbar:
     def _update_buttons(self, adapter: Optional[Adapter]) -> None:
         powered = adapter is not None and adapter["Powered"]
         self.b_search.props.sensitive = powered and not (adapter and adapter["Discovering"])
-
         tree_iter = self.blueman.List.selected()
         if tree_iter is None:
             self.b_bond.props.sensitive = False
@@ -98,16 +104,17 @@ class ManagerToolbar:
             #self.b_send.props.sensitive = False
             self.b_connect.props.sensitive = False
         else:
-            row = self.blueman.List.get(tree_iter, "paired", "trusted", "objpush")
+            row = self.blueman.List.get(tree_iter, "paired", "trusted", "objpush", "connected")
             self.b_bond.props.sensitive = powered and not row["paired"]
             self.b_trust.props.sensitive = True
             self.b_remove.props.sensitive = True
             #self.b_send.props.sensitive = powered and row["objpush"]
             self.b_connect.props.sensitive = powered
-
             icon_name = "blueman-untrust-symbolic" if row["trusted"] else "blueman-trust-symbolic"
             self.b_trust.props.icon_widget = Gtk.Image(icon_name=icon_name, pixel_size=24, visible=True)
             self.b_trust.props.label = _("Untrust") if row["trusted"] else _("Trust")
+            self.b_connect.set_label(_("Disconnect") if row["connected"] else _("Connect"))
+
 
     def on_device_propery_changed(self, dev_list: ManagerDeviceList, device: Device, tree_iter: Gtk.TreeIter,
                                   key_value: Tuple[str, object]) -> None:

@@ -2,7 +2,10 @@ import logging
 from enum import Enum, auto
 from typing import Optional
 from gettext import gettext as _
+
+from gi.overrides import Gtk
 from gi.repository import GLib
+from gi.repository import Gtk
 
 from blueman.bluez.Device import Device
 from blueman.gui.manager.ManagerDeviceMenu import ManagerDeviceMenu
@@ -19,12 +22,11 @@ class ConnectDevice:
 
     def connect_service(self, device: Device, uuid: str = GENERIC_CONNECT) -> None:
         self.logger.info(f"Connecting to service {uuid} on device {device}")
-
         try:
-            _appl: Optional[AppletService] = AppletService()
+            self._appl: Optional[AppletService] = AppletService()
         except DBusProxyFailed:
             self.logger.error("** Failed to connect to applet", exc_info=True)
-            _appl = None
+            self._appl = None
 
         selected = self.Blueman.List.selected()
         if not selected:
@@ -32,11 +34,18 @@ class ConnectDevice:
         row = self.Blueman.List.get(selected, "alias", "paired", "connected", "trusted", "objpush", "device",
                                     "blocked")
         self.SelectedDevice = row["device"]
-        self.logger.info(f"SelectedDevice: {self.SelectedDevice}")
+        print(f"row: {row}")
+        self.logger.info(f"SelectedDevice: {self.SelectedDevice} > connected: {row['connected']}")
+        if row['connected']:
+            self.disconnect_service(device)
+
+            return
+
         def success(_obj: AppletService, _result: None, _user_data: None) -> None:
             self.logger.info("success")
             prog.message(_("Success!"))
-
+            b_connect = self.Blueman.builder.get_widget("b_connect", Gtk.ToolButton)
+            b_connect.set_label(_("Disconnect"))
             self.unset_op(device)
 
         def fail(_obj: Optional[AppletService], result: GLib.Error, _user_data: None) -> None:
@@ -51,11 +60,11 @@ class ConnectDevice:
         if uuid == self.GENERIC_CONNECT:
             prog.connect("cancelled", lambda x: self.disconnect_service(device))
 
-        if _appl is None:
+        if self._appl is None:
             fail(None, GLib.Error('Applet DBus Service not available'), None)
             return
 
-        _appl.ConnectService('(os)', device.get_object_path(), uuid,
+        self._appl.ConnectService('(os)', device.get_object_path(), uuid,
                              result_handler=success, error_handler=fail,
                              timeout=GLib.MAXINT)
 
@@ -74,6 +83,26 @@ class ConnectDevice:
             self.logger.info(f"op: regenerating instance {inst}")
             if inst.SelectedDevice == self.SelectedDevice and not (inst.is_popup and not inst.props.visible):
                 inst.generate()
+
+    def disconnect_service(self, device: Device, uuid: str = GENERIC_CONNECT, port: int = 0) -> None:
+        def ok(_obj: AppletService, _result: None, _user_date: None) -> None:
+            self.logger.info("disconnect success")
+            b_connect = self.Blueman.builder.get_widget("b_connect", Gtk.ToolButton)
+            b_connect.set_label(_("Connect"))
+
+        def err(_obj: Optional[AppletService], result: GLib.Error, _user_date: None) -> None:
+            self.logger.warning(f"disconnect failed {result}")
+            msg, tb = _(result.message)
+            self.Blueman.infobar_update(_("Disconnection Failed: ") + msg, bt=tb)
+
+
+        if self._appl is None:
+            err(None, GLib.Error('Applet DBus Service not available'), None)
+            return
+
+        self._appl.DisconnectService('(osd)', device.get_object_path(), uuid, port,
+                                     result_handler=ok, error_handler=err, timeout=GLib.MAXINT)
+
 
     def _handle_error_message(self, error: GLib.Error) -> None:
         err = self._BLUEZ_ERROR_MAP.get(error.message.split(":", 3)[-1].strip())

@@ -44,6 +44,7 @@ class SurfaceObject(GObject.Object):
 
 class ManagerDeviceList(DeviceList):
     def __init__(self, inst: "Blueman", adapter: Optional[str] = None) -> None:
+        self.logger = logging.getLogger('bm.ManagerDeviceList')
         cr = Gtk.CellRendererText()
         cr.props.ellipsize = Pango.EllipsizeMode.END
         tabledata: List[ListDataDict] = [
@@ -137,7 +138,7 @@ class ManagerDeviceList(DeviceList):
         if obj_path not in self._batteries:
             battery_proxy = Battery(obj_path=obj_path)
             self._batteries[obj_path] = battery_proxy
-            logging.debug(f"{obj_path} {battery_proxy['Percentage']}")
+            self.logger.debug(f"{obj_path} {battery_proxy['Percentage']}")
 
     def on_battery_removed(self, _manager: Manager, obj_path: str) -> None:
         if obj_path in self._batteries:
@@ -148,7 +149,7 @@ class ManagerDeviceList(DeviceList):
         row = self.get(tree_iter, "caption")
         if key.lower() in row["caption"].lower():
             return False
-        logging.info(f"{model} {column} {key} {tree_iter}")
+        self.logger.info(f"{model} {column} {key} {tree_iter}")
         return True
 
     def filter_func(self, _model: Gtk.TreeModel, tree_iter: Gtk.TreeIter, _data: Any) -> bool:
@@ -157,7 +158,7 @@ class ManagerDeviceList(DeviceList):
         klass = get_minor_class(device["Class"]) if device is not None else None
 
         if row["no_name"] and self.Config["hide-unnamed"] and klass not in (_("Keyboard"), _("Combo")):
-            logging.info("Hiding unnamed device")
+            #self.logger.info("Hiding unnamed device")
             return False
         else:
             return True
@@ -274,7 +275,7 @@ class ManagerDeviceList(DeviceList):
         icon_info = self.icon_theme.lookup_icon_for_scale(icon_name, size, scale, Gtk.IconLookupFlags.FORCE_SIZE)
 
         if icon_info is None:
-            logging.error(f"Failed to look up icon \"{icon_name}\" likely due to broken icon theme.")
+            self.logger.error(f"Failed to look up icon \"{icon_name}\" likely due to broken icon theme.")
             missing_icon_info = self.icon_theme.lookup_icon_for_scale(
                 "image-missing",
                 size,
@@ -320,6 +321,8 @@ class ManagerDeviceList(DeviceList):
 
     def device_remove_event(self, object_path: ObjectPath) -> None:
         tree_iter = self.find_device_by_path(object_path)
+        if not tree_iter:
+            self.logger.warning(f"Device {object_path} not found in list")
         assert tree_iter is not None
 
         iter_set, _child_tree_iter = self.filter.convert_child_iter_to_iter(tree_iter)
@@ -386,6 +389,7 @@ class ManagerDeviceList(DeviceList):
                                          device["Blocked"])
         surface_object = SurfaceObject(surface)
         display_name = self.make_display_name(device.display_name, device["Class"], device['Address'])
+        self.logger.info(f"Setting up row for {display_name}")
         caption = self.make_caption(display_name, description, device['Address'])
 
         self.set(tree_iter, caption=caption, alias=display_name, objpush=has_objpush, device_surface=surface_object)
@@ -393,19 +397,19 @@ class ManagerDeviceList(DeviceList):
         try:
             self.row_update_event(tree_iter, "Trusted", device['Trusted'])
         except Exception as e:
-            logging.exception(e)
+            self.logger.exception(e)
         try:
             self.row_update_event(tree_iter, "Paired", device['Paired'])
         except Exception as e:
-            logging.exception(e)
+            self.logger.exception(e)
         try:
             self.row_update_event(tree_iter, "Connected", device["Connected"])
         except Exception as e:
-            logging.exception(e)
+            self.logger.exception(e)
         try:
             self.row_update_event(tree_iter, "Blocked", device["Blocked"])
         except Exception as e:
-            logging.exception(e)
+            self.logger.exception(e)
 
         if device["Connected"]:
             self._monitor_power_levels(tree_iter, device)
@@ -419,7 +423,7 @@ class ManagerDeviceList(DeviceList):
         try:
             cinfo.init()
         except ConnInfoReadError:
-            logging.warning("Failed to get power levels, probably a LE device.")
+            self.logger.warning("Failed to get power levels, probably a LE device.")
 
         model = self.liststore
         assert isinstance(model, Gtk.TreeModel)
@@ -430,7 +434,7 @@ class ManagerDeviceList(DeviceList):
 
     def _check_power_levels(self, row_ref: Gtk.TreeRowReference, cinfo: conn_info, address: BtAddress) -> bool:
         if not row_ref.valid():
-            logging.warning("stopping monitor (row does not exist)")
+            self.logger.warning("stopping monitor (row does not exist)")
             cinfo.deinit()
             self._monitored_devices.remove(address)
             return False
@@ -450,9 +454,9 @@ class ManagerDeviceList(DeviceList):
             return False
 
     def row_update_event(self, tree_iter: Gtk.TreeIter, key: str, value: Any) -> None:
-        logging.info(f"{key} {value}")
 
         device = self.get(tree_iter, "device")["device"]
+        self.logger.info(f"Updating row for {device.display_name} with {key}={value}")
 
         if key in ("Blocked", "Connected", "Paired", "Trusted"):
             surface = self._make_device_icon(device["Icon"], device["Paired"], device["Connected"], device["Trusted"],

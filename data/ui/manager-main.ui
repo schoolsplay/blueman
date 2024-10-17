@@ -296,6 +296,7 @@
                 <property name="sensitive">False</property>
                 <property name="can-focus">False</property>
                 <property name="tooltip-text" translatable="yes">Connect audio output to the device</property>
+                <property name="is-important">True</property>
                 <property name="label" translatable="yes" comments="translators: toolbar item: keep it as short as possible">Connect</property>
                 <property name="icon-name">bluetooth-symbolic</property>
               </object>
@@ -321,6 +322,7 @@
                 <property name="sensitive">False</property>
                 <property name="can-focus">False</property>
                 <property name="tooltip-text" translatable="yes">Create pairing with the device</property>
+                <property name="is-important">True</property>
                 <property name="label" translatable="yes" comments="translators: toolbar item: keep it as short as possible">Pair</property>
                 <property name="icon-name">blueman-pair-symbolic</property>
               </object>
@@ -336,6 +338,7 @@
                 <property name="sensitive">False</property>
                 <property name="can-focus">False</property>
                 <property name="tooltip-text" translatable="yes">Mark/Unmark this device as trusted</property>
+                <property name="is-important">True</property>
                 <property name="label" translatable="yes" comments="translators: toolbar item: keep it as short as possible">Trust</property>
                 <property name="icon-name">blueman-trust-symbolic</property>
               </object>
@@ -351,6 +354,7 @@
                 <property name="sensitive">False</property>
                 <property name="can-focus">False</property>
                 <property name="tooltip-text" translatable="yes">Remove this device from the known devices list</property>
+                <property name="is-important">True</property>
                 <property name="label" translatable="yes" comments="translators: toolbar item: keep it as short as possible">Remove</property>
                 <property name="icon-name">list-remove-symbolic</property>
               </object>
