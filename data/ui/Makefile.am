@@ -12,6 +12,7 @@ ui_DATA =				\
 	net-usage.ui		\
 	note.ui				\
 	rename-device.ui	\
-	services-window.ui
+	services-window.ui \
+	audio_sink_dialog.ui
 
 EXTRA_DIST = $(ui_DATA)

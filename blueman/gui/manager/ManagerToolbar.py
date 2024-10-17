@@ -63,6 +63,9 @@ class ManagerToolbar:
             if row['connected']:
                 self.b_connect.set_label(_("Disconnect"))
 
+        self.b_set_sink = blueman.builder.get_widget("b_set_sink", Gtk.ToolButton)
+        self.b_set_sink.connect("clicked", self.blueman.show_audio_sink_dialog)
+
         self.on_adapter_changed(blueman.List, blueman.List.get_adapter_path())
 
     def on_bt_action(self, _button: Gtk.ToolButton, func) -> None:
@@ -82,7 +85,7 @@ class ManagerToolbar:
             self._update_buttons(adapter)
 
     def on_adapter_changed(self, _lst: ManagerDeviceList, adapter_path: Optional[ObjectPath]) -> None:
-        self.logger.debug(f"toolbar adapter {adapter_path}")
+        self.logger.debug(f"adapter_changed {adapter_path}")
         self._update_buttons(None if adapter_path is None else Adapter(obj_path=adapter_path))
 
     def on_device_selected(
@@ -108,6 +111,7 @@ class ManagerToolbar:
             self.b_bond.props.sensitive = powered and not row["paired"]
             self.b_trust.props.sensitive = True
             self.b_remove.props.sensitive = True
+            self.b_set_sink.props.sensitive = row["connected"]
             #self.b_send.props.sensitive = powered and row["objpush"]
             self.b_connect.props.sensitive = powered
             icon_name = "blueman-untrust-symbolic" if row["trusted"] else "blueman-trust-symbolic"

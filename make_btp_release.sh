@@ -36,10 +36,9 @@ cp -rf .venv3.8/lib/python3.8/site-packages/pygtkcompat release/.venv3.8/lib/pyt
 cp -f ~/Github/SchoolsplayRepos/blueman/module/.libs/_blueman.so release/.venv3.8/lib/python3.8/site-packages/
 # we need to move the ui and icons to the share folder
 mkdir -p release/.venv3.8/share/blueman
-cp -rf .venv3.8/lib/python3.8/site-packages/data/ui release/.venv3.8/share/blueman/
-cp -rf .venv3.8/lib/python3.8/site-packages/data/icons release/.venv3.8/share/blueman/
-# and remove data from the site-packages
-rm -rf release/.venv3.8/lib/python3.8/site-packages/data
+# we symlink the ui and icons to the share folder
+ln -s ../../lib/python3.8/site-packages/data/ui release/.venv3.8/share/blueman/
+ln -s ../../lib/python3.8/site-packages/data/icons release/.venv3.8/share/blueman/
 
 cp -rf .venv3.8/libexec release/.venv3.8/
 cp start_blueman-manager.py release/.venv3.8/bin/

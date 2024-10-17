@@ -3,6 +3,9 @@ from enum import Enum, auto
 from typing import Optional
 from gettext import gettext as _
 
+import gi
+gi.require_version("Gtk", "3.0")
+gi.require_version("Gdk", "3.0")
 from gi.overrides import Gtk
 from gi.repository import GLib
 from gi.repository import Gtk
@@ -11,7 +14,7 @@ from blueman.bluez.Device import Device
 from blueman.gui.manager.ManagerDeviceMenu import ManagerDeviceMenu
 from blueman.gui.manager.ManagerProgressbar import ManagerProgressbar
 from blueman.main.DBusProxies import AppletService, DBusProxyFailed
-
+import pulsectl
 
 class ConnectDevice:
     def __init__(self, blueman) -> None:
@@ -34,7 +37,6 @@ class ConnectDevice:
         row = self.Blueman.List.get(selected, "alias", "paired", "connected", "trusted", "objpush", "device",
                                     "blocked")
         self.SelectedDevice = row["device"]
-        print(f"row: {row}")
         self.logger.info(f"SelectedDevice: {self.SelectedDevice} > connected: {row['connected']}")
         if row['connected']:
             self.disconnect_service(device)
@@ -46,6 +48,8 @@ class ConnectDevice:
             prog.message(_("Success!"))
             b_connect = self.Blueman.builder.get_widget("b_connect", Gtk.ToolButton)
             b_connect.set_label(_("Disconnect"))
+            b_set_sink = self.Blueman.builder.get_widget("b_set_sink", Gtk.ToolButton)
+            b_set_sink.set_sensitive(True)
             self.unset_op(device)
 
         def fail(_obj: Optional[AppletService], result: GLib.Error, _user_data: None) -> None:
@@ -89,6 +93,8 @@ class ConnectDevice:
             self.logger.info("disconnect success")
             b_connect = self.Blueman.builder.get_widget("b_connect", Gtk.ToolButton)
             b_connect.set_label(_("Connect"))
+            b_set_sink = self.Blueman.builder.get_widget("b_set_sink", Gtk.ToolButton)
+            b_set_sink.set_sensitive(False)
 
         def err(_obj: Optional[AppletService], result: GLib.Error, _user_date: None) -> None:
             self.logger.warning(f"disconnect failed {result}")
@@ -151,3 +157,66 @@ class ConnectDevice:
         "Cancelled": _BluezError.CANCELED,
         "br-connection-canceled": _BluezError.CANCELED,
     }
+
+class PulseInfo:
+    """PulseAudio information"""
+    def __init__(self):
+        self.logger = logging.getLogger('bm.BtConnect.PulseInfo')
+        # sink_list holds tuples with the sink name and the volume, (name, volume)
+        self.sink_list = []
+        self.default_sink = None
+
+    def get_sinks(self):
+        self.logger.info("get_sinks")
+
+        with pulsectl.Pulse('blueman') as pulse:
+            try:
+                for sink in pulse.sink_list():
+                    self.sink_list.append((sink.name, sink.volume.value_flat))
+            except Exception as e:
+                self.logger.error("Error getting PulseAudio sinks", exc_info=True)
+            else:
+                self.logger.info(f"get_sinks: {self.sink_list}")
+            return self.sink_list
+
+    def get_default_sink(self):
+        self.logger.info("get_default_sink")
+        with pulsectl.Pulse('blueman') as pulse:
+            try:
+                self.default_sink = pulse.sink_default_get().name
+            except Exception as e:
+                self.logger.error("Error getting PulseAudio default sink", exc_info=True)
+            else:
+                self.logger.info(f"get_default_sink: {self.default_sink}")
+                return self.default_sink
+
+    def set_default_sink(self, sink_name):
+        self.logger.info(f"set_default_sink: {sink_name}")
+        with pulsectl.Pulse('blueman') as pulse:
+            try:
+                for sink in pulse.sink_list():
+                    if sink.name == sink_name:
+                        pulse.sink_default_set(sink)
+                        break
+            except Exception as e:
+                self.logger.error("Error setting PulseAudio default sink", exc_info=True)
+            else:
+                return True
+
+    def set_sink_volume(self, sink_name='', volume=0.85):
+        self.logger.info(f"set_sink_volume: {sink_name} {volume}")
+        if not sink_name:
+            sink_name = self.get_default_sink()
+            self.logger.info(f"set_sink_volume: default sink {sink_name}")
+        with pulsectl.Pulse('blueman') as pulse:
+            try:
+                for sink in pulse.sink_list():
+                    if sink.name == sink_name:
+                        pulse.volume_set_all_chans(sink, volume)
+                        break
+            except Exception as e:
+                self.logger.error("Error setting PulseAudio sink volume", exc_info=True)
+            else:
+                return True
+
+

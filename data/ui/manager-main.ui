@@ -374,6 +374,22 @@
               </packing>
             </child>
             <child>
+              <object class="GtkToolButton" id="b_set_sink">
+                <property name="width-request">100</property>
+                <property name="visible">True</property>
+                <property name="sensitive">False</property>
+                <property name="can-focus">False</property>
+                <property name="tooltip-text" translatable="yes">Connect audio output to the device</property>
+                <property name="is-important">True</property>
+                <property name="label" translatable="yes" comments="translators: toolbar item: keep it as short as possible">Set Audio</property>
+                <property name="icon-name">audio-x-generic</property>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="homogeneous">True</property>
+              </packing>
+            </child>
+            <child>
               <object class="GtkToolItem" id="bluetooth_status">
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>

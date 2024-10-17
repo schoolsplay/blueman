@@ -159,6 +159,32 @@ class Blueman(Gtk.Application):
 
         self.window.present_with_time(Gtk.get_current_event_time())
 
+    def show_audio_sink_dialog(self, _button: Gtk.ToolButton) -> None:
+        builder = Builder("audio_sink_dialog.ui")
+        dialog = builder.get_widget("dialog", Gtk.Dialog)
+        scv = builder.get_widget("scrollview", Gtk.ScrolledWindow)
+
+        def on_close(_dialog: Gtk.Dialog) -> None:
+            dialog.destroy()
+
+        dialog.connect("close", on_close)
+        b_close  = builder.get_widget("b_close", Gtk.Button)
+        b_close.connect("clicked", lambda _: on_close(dialog))
+
+        # Remove existing child if any
+        if scv.get_child():
+            scv.remove(scv.get_child())
+
+        vbox = Gtk.VBox()
+        for txt in ["test line 1", "test line 2", "test line 3", "test line 4", "test line 5"]:
+            label = Gtk.Label(label=txt)
+            vbox.pack_start(label, False, False, 0)
+
+        scv.add(vbox)
+        dialog.show_all()
+
+
+
     def _on_bt_state_changed(self, action: Gio.SimpleAction, state_variant: GLib.Variant) -> None:
         action.set_state(state_variant)
 
