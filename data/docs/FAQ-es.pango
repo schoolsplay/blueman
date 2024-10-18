@@ -1,0 +1,38 @@
+<b>¿Por qué el dispositivo aparece como conectado en la lista, pero el dispositivo no está conectado?</b>
+
+    Es posible que el dispositivo esté conectado a otro dispositivo o que la conexión se haya perdido.
+    Intenta desconectar y volver a conectar el dispositivo.
+    Si eso no funciona, intenta apagar y encender el Bluetooth nuevamente.
+
+<b>Mi dispositivo no es encontrado por la máquina BTP+, pero sí por mi teléfono. ¿Por qué?</b>
+
+    Es posible que la máquina BTP+ no sea compatible con el dispositivo o que el dispositivo no esté en modo de
+    emparejamiento. Asegúrate de que el dispositivo esté en modo de emparejamiento y vuelve a intentarlo.
+
+<b>Mi dispositivo es encontrado y emparejado, pero no se puede conectar.</b>
+
+    Si has conectado otro dispositivo, desconéctalo primero.
+
+<b>¿Qué significa "Confiar" en un dispositivo?</b>
+
+    Confiar significa que el dispositivo Bluetooth puede conectarse automáticamente.
+
+<b>¿Por qué un dispositivo de confianza aparece como no confiable al día siguiente sin que yo haya hecho nada?</b>
+
+    Normalmente no, una vez emparejado o confiado, ese estado debería persistir.
+
+<b>¿Caduca el emparejamiento? Mi dispositivo emparejado desaparece regularmente de la lista.</b>
+
+    Los dispositivos que han sido emparejados/confiados/conectados una vez deberían persistir.
+
+<b>¿Por qué es necesario hacer clic manualmente en Buscar para ver los dispositivos cercanos?</b>
+
+     Buscar dispositivos es una operación costosa que causa mucho tráfico de radio.
+     No es algo que quieras mantener encendido continuamente.
+
+<b>Uso el dispositivo indistintamente entre Windows/MacOS/Android y la máquina BTP+, pero a menudo necesito
+    emparejarlo de nuevo. ¿Por qué?</b>
+
+    Cambiar entre esos sistemas probablemente sea la causa de la desaparición de los dispositivos.
+    Si vuelves a emparejar después de cambiar, se generará y almacenará una nueva clave de emparejamiento.
+    Cuando vuelvas al otro sistema y vuelvas a emparejar, obtendrás una nueva clave de emparejamiento nuevamente.

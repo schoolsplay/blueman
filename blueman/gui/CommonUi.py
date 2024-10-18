@@ -3,7 +3,7 @@ from datetime import datetime
 from gettext import gettext as _
 from typing import Optional, overload, TYPE_CHECKING
 
-from gi.overrides.GLib import GLib
+from gi.repository import GLib
 
 from blueman.Constants import WEBSITE, VERSION
 
@@ -72,22 +72,51 @@ def show_about_dialog(app_name: str, run: bool = True, parent: Optional[Gtk.Wind
                         'Copyright © 2008 Tadas Dailyda\n'
                         f'Copyright © 2008 - {datetime.now().year} blueman project'
                         )
-    test_lines = ["line 1\n", "line 2\n", "line 3\n", "line 4\n", "line 5\n", "line 6\n", "line 7\n", "line 8\n"]
-    about.set_comments(_('Blueman is a GTK+ Bluetooth manager' + '\n'+ "Now edited for use on BTP machines.\n" + ",".join(test_lines)))
+    about.set_comments(_('Blueman is a GTK+ Bluetooth manager' + '\n'+ "This version is adapted for use on BTP machines.\n"))
     about.set_website(WEBSITE)
     about.set_website_label(WEBSITE)
-    about.set_icon_name('blueman')
-    about.set_logo_icon_name('blueman')
+    about.set_icon_name('btp')
+    about.set_logo_icon_name('btp')
     about.set_authors(['Valmantas Palikša <walmis@balticum-tv.lt>',
                        'Tadas Dailyda <tadas@dailyda.com>',
-                       f'{WEBSITE}/graphs/contributors',
-                       'For BTP+ <hj@btp.nl>'
+                       'For BTP+ fork <hj@btp.nl>'
                        ])
     if run:
         about.show()
         return None
     else:
         return about
+
+def show_faq_dialog(parent: Optional[Gtk.Window] = None) -> None:
+    dialog = Gtk.Dialog(title=_("Frequently Asked Questions"), transient_for=parent, modal=True)
+    dialog.add_button(Gtk.STOCK_CLOSE, Gtk.ResponseType.CLOSE)
+    dialog.set_default_size(700, 400)
+    dialog.set_border_width(10)
+
+    # we read a pango markup file from disk, and display it in a scrolled window
+    # check the current locale as we need to load the correct file
+    loc = GLib.get_language_names()[0]
+    if loc == 'nl':
+        path = 'data/docs/FAQ-nl.pango'
+    elif loc == 'es':
+        path = 'data/docs/FAQ-es.pango'
+    else:
+        path = 'data/docs/FAQ.pango'
+    text = open(path, 'r').read()
+    label = Gtk.Label()
+    label.set_markup(text)
+
+    mainbox = dialog.get_content_area()
+    scrolled = Gtk.ScrolledWindow()
+    scrolled.set_vexpand(True)
+
+    scrolled.set_policy(Gtk.PolicyType.AUTOMATIC, Gtk.PolicyType.AUTOMATIC)
+    scrolled.add(label)
+    mainbox.add(scrolled)
+    dialog.show_all()
+    dialog.run()
+    dialog.destroy()
+
 
 class PulseDialog(Gtk.Dialog):
     def __init__(self, parent: Optional[Gtk.Window] = None):

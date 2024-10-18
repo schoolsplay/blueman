@@ -2,7 +2,7 @@ __all__ = ["VERSION", "PACKAGE", "WEBSITE", "ICON_PATH", "PIXMAP_PATH", "UI_PATH
 
 VERSION = "@VERSION@"
 PACKAGE = "@PACKAGE@"
-WEBSITE = "https://github.com/blueman-project/blueman"
+WEBSITE = "https:www.braintrainerplus.com"
 PREFIX = "@prefix@"
 BIN_DIR = "@BINDIR@"
 LOCALEDIR = "@LOCALEDIR@"

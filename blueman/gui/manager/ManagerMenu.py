@@ -8,7 +8,7 @@ from blueman.bluez.Device import Device
 from blueman.bluez.Manager import Manager
 from blueman.gui.manager.ManagerDeviceList import ManagerDeviceList
 from blueman.gui.manager.ManagerDeviceMenu import ManagerDeviceMenu
-from blueman.gui.CommonUi import show_about_dialog
+from blueman.gui.CommonUi import show_about_dialog, show_faq_dialog
 from blueman.Constants import WEBSITE
 from blueman.Functions import launch, adapter_path_to_name
 
@@ -48,6 +48,9 @@ class ManagerMenu:
         assert isinstance(widget, Gtk.Window)
         window = widget
         help_item.connect("activate", lambda x: show_about_dialog('Blueman ' + _('Device Manager'), parent=window))
+
+        faq_item = blueman.builder.get_widget("faq", Gtk.ImageMenuItem)
+        faq_item.connect("activate", lambda x: show_faq_dialog(parent=window))
 
         item_toolbar = blueman.builder.get_widget("show_tb_item", Gtk.CheckMenuItem)
         self.blueman.Config.bind("show-toolbar", item_toolbar, "active", Gio.SettingsBindFlags.DEFAULT)

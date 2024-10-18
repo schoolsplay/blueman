@@ -55,8 +55,8 @@
             <property name="margin-bottom">23</property>
             <child>
               <object class="GtkMenuItem" id="item_adapter">
-                <property name="visible">True</property>
                 <property name="can-focus">False</property>
+                <property name="double-buffered">False</property>
                 <property name="margin-end">24</property>
                 <property name="label" translatable="yes">_Adapter</property>
                 <property name="use-underline">True</property>
@@ -117,9 +117,9 @@
             </child>
             <child>
               <object class="GtkMenuItem" id="item_device">
-                <property name="visible">True</property>
                 <property name="sensitive">False</property>
                 <property name="can-focus">False</property>
+                <property name="double-buffered">False</property>
                 <property name="margin-end">24</property>
                 <property name="label" translatable="yes">_Device</property>
                 <property name="use-underline">True</property>
@@ -127,9 +127,9 @@
             </child>
             <child>
               <object class="GtkMenuItem" id="item_view">
-                <property name="visible">True</property>
                 <property name="sensitive">False</property>
                 <property name="can-focus">False</property>
+                <property name="double-buffered">False</property>
                 <property name="margin-end">24</property>
                 <property name="label" translatable="yes">_View</property>
                 <property name="use-underline">True</property>
@@ -251,6 +251,16 @@
                     <child>
                       <object class="GtkImageMenuItem" id="help">
                         <property name="label" translatable="yes">_Help</property>
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="use-underline">True</property>
+                        <property name="image">im_help</property>
+                        <property name="use-stock">False</property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkImageMenuItem" id="faq">
+                        <property name="label" translatable="yes">_FAQ</property>
                         <property name="visible">True</property>
                         <property name="can-focus">False</property>
                         <property name="use-underline">True</property>

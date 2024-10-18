@@ -1,0 +1,38 @@
+<b>Waarom wordt het apparaat als verbonden weergegeven in de lijst, maar is het apparaat niet verbonden?</b>
+
+    Het is mogelijk dat het apparaat is verbonden met een ander apparaat of dat de verbinding is verbroken.
+    Probeer het apparaat los te koppelen en opnieuw te verbinden.
+    Als dat niet werkt, probeer dan Bluetooth uit en weer aan te zetten.
+
+<b>Mijn apparaat wordt niet gevonden door de BTP+ machine, maar wel door mijn telefoon. Waarom?</b>
+
+    De BTP+ machine ondersteunt het apparaat mogelijk niet of het apparaat staat niet in de koppelingsmodus.
+    Zorg ervoor dat het apparaat in de koppelingsmodus staat en probeer het opnieuw.
+
+<b>Mijn apparaat wordt gevonden en gekoppeld, maar het lukt niet om verbinding te maken.</b>
+
+    Als je een ander apparaat hebt verbonden, koppel dat apparaat dan eerst los.
+
+<b>Wat betekent het om een apparaat te "Vertrouwen"?</b>
+
+    Vertrouwen betekent dat het Bluetooth-apparaat automatisch verbinding mag maken.
+
+<b>Waarom wordt een vertrouwd apparaat de volgende dag als niet-vertrouwd weergegeven zonder dat ik iets heb gedaan?</b>
+
+    Normaal gesproken niet, eenmaal gekoppeld of vertrouwd zou die status moeten blijven bestaan.
+
+<b>Verloopt de koppeling? Mijn gekoppelde apparaat verdwijnt regelmatig uit de lijst.</b>
+
+    Apparaten die eenmaal zijn gekoppeld/vertrouwd/verbonden zouden moeten blijven bestaan.
+
+<b>Waarom is het nodig om handmatig op Zoeken te klikken om apparaten in de buurt te zien?</b>
+
+     Zoeken naar apparaten is een dure operatie die veel radiotraffic veroorzaakt.
+     Het is niet iets wat je continu wilt laten aanstaan.
+
+<b>Ik gebruik het apparaat afwisselend tussen Windows/Macos/Android en de BTP+ machine,
+    maar vaak moet ik het opnieuw koppelen. Waarom?</b>
+
+    Het wisselen tussen die systemen is waarschijnlijk de oorzaak van het verdwijnen van de apparaten.
+    Als je opnieuw koppelt na het wisselen, wordt er een nieuwe koppelingssleutel gegenereerd en opgeslagen.
+    Wanneer je teruggaat naar het andere systeem en opnieuw koppelt, krijg je weer een nieuwe koppelingssleutel.
