@@ -162,9 +162,11 @@ class PulseInfo:
     """PulseAudio information"""
     def __init__(self):
         self.logger = logging.getLogger('bm.BtConnect.PulseInfo')
-        # sink_list holds tuples with the sink name and the volume, (name, volume)
-        self.sink_list = []
+        # sink_hash is a dictionary with the following structure:
+        # {description: {sink_name: string, volume: float, state: Boolean}}
+        self.sink_hash = {}
         self.default_sink = None
+
 
     def get_sinks(self):
         self.logger.info("get_sinks")
@@ -172,12 +174,14 @@ class PulseInfo:
         with pulsectl.Pulse('blueman') as pulse:
             try:
                 for sink in pulse.sink_list():
-                    self.sink_list.append((sink.name, sink.volume.value_flat))
+                    self.sink_hash[sink.description] = {'sink_name': sink.name, 'volume': sink.volume.value_flat,
+                                                        'state': sink.state._value == 'running'}
             except Exception as e:
                 self.logger.error("Error getting PulseAudio sinks", exc_info=True)
+                self.sink_hash = {'default': {'sink_name': 'No sinks found', 'volume': 0.85, 'state': False}}
             else:
-                self.logger.info(f"get_sinks: {self.sink_list}")
-            return self.sink_list
+                self.logger.info(f"get_sinks: {self.sink_hash}")
+            return self.sink_hash
 
     def get_default_sink(self):
         self.logger.info("get_default_sink")

@@ -10,6 +10,7 @@ from blueman.Constants import WEBSITE, VERSION
 import gi
 
 from blueman.bluez.Device import Device
+from blueman.gui.BtConnect import PulseInfo
 from blueman.gui.manager.ManagerDeviceMenu import ManagerDeviceMenu
 from blueman.gui.manager.ManagerProgressbar import ManagerProgressbar
 from blueman.main.DBusProxies import DBusProxyFailed, AppletService
@@ -87,4 +88,49 @@ def show_about_dialog(app_name: str, run: bool = True, parent: Optional[Gtk.Wind
         return None
     else:
         return about
+
+class PulseDialog(Gtk.Dialog):
+    def __init__(self, devicelist, parent: Optional[Gtk.Window] = None):
+        super().__init__(title=_("PulseAudio"), transient_for=parent, modal=True)
+        self.add_button(Gtk.STOCK_CLOSE, Gtk.ResponseType.CLOSE)
+
+        self.PI = PulseInfo()
+        self.set_default_size(400, 300)
+        self.set_border_width(10)
+
+        self.fill_dialog(devicelist)
+
+        self.show_all()
+        self.run()
+        self.destroy()
+        # TODO: Implement PulseAudio sink setting
+        print("PulseAudio sink setting not yet implemented")
+
+
+    def fill_dialog(self, devicelist):
+
+        sinks = self.PI.get_sinks()
+        print(f"Got sinks info: {sinks}")
+
+        print("Filling dialog")
+        mainbox = self.get_content_area()
+        vbox = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=6)
+        self.devicelist = devicelist
+        print(self.devicelist)
+        first_radio = None
+        for k in sinks.keys():
+            hbox = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=6)
+            print(k['description'])
+            lbl = Gtk.Label(label=k)
+            hbox.add(lbl)
+            volume = Gtk.VolumeButton()
+            volume.set_value(50)
+            hbox.add(volume)
+            radio = Gtk.RadioButton.new_with_label_from_widget(first_radio, _("Default"))
+            if first_radio is None:
+                first_radio = radio
+            hbox.add(radio)
+            vbox.add(hbox)
+
+        mainbox.add(vbox)
 
