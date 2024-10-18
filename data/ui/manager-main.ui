@@ -281,7 +281,7 @@
                 <property name="can-focus">False</property>
                 <property name="tooltip-text" translatable="yes">Search for nearby devices</property>
                 <property name="is-important">True</property>
-                <property name="label" translatable="yes" comments="translators: toolbar item: keep it as short as possible">Search</property>
+                <property name="label" translatable="yes" comments="translators: toolbar item: keep it as short as possible">Find Bluetooth devices</property>
                 <property name="icon-name">edit-find-symbolic</property>
               </object>
               <packing>
@@ -379,7 +379,7 @@
                 <property name="visible">True</property>
                 <property name="sensitive">False</property>
                 <property name="can-focus">False</property>
-                <property name="tooltip-text" translatable="yes">Connect audio output to the device</property>
+                <property name="tooltip-text" translatable="yes">Set different audio output</property>
                 <property name="is-important">True</property>
                 <property name="label" translatable="yes" comments="translators: toolbar item: keep it as short as possible">Set Audio</property>
                 <property name="icon-name">audio-x-generic</property>

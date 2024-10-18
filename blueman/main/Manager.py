@@ -160,8 +160,7 @@ class Blueman(Gtk.Application):
         self.window.present_with_time(Gtk.get_current_event_time())
 
     def show_audio_sink_dialog(self, _button: Gtk.ToolButton) -> None:
-        dialog = PulseDialog(self.List.manager.get_devices(), parent=self.window)
-
+        dialog = PulseDialog(parent=self.window)
 
 
     def _on_bt_state_changed(self, action: Gio.SimpleAction, state_variant: GLib.Variant) -> None:
