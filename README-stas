@@ -3,8 +3,8 @@
 # See also the README.blue in project XrandKivy for deploy stuff
 
 - Setup a virt py3.8, see requirements.txt
-- sudo apt install python-gi-dev libbluetooth-dev bluez libcairo2-dev libgirepository1.0-dev cython3 autopoint gettext
-- to run I also needed pulseaudio-module-bluetooth
+- sudo apt install python-gi-dev libbluetooth-dev bluez libcairo2-dev libgirepository1.0-dev cython3 autopoint gettext autoconf libtool libpulse-dev
+- to run I also needed pulseaudio-module-bluetooth and blueman to run this code locally
 - PYTHON=/home/stas/Github/SchoolsplayRepos/blueman/.venv3.8/bin/python3.8 ./autogen.sh --prefix=/home/stas/Github/SchoolsplayRepos/blueman/.venv3.8
 - make && make install
 - mkdir .venv3.8/lib/python3.8/site-packages/data
