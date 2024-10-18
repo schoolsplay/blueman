@@ -93,41 +93,22 @@ class PulseDialog(Gtk.Dialog):
     def __init__(self, devicelist, parent: Optional[Gtk.Window] = None):
         super().__init__(title=_("PulseAudio"), transient_for=parent, modal=True)
         self.add_button(Gtk.STOCK_CLOSE, Gtk.ResponseType.CLOSE)
-        self.set_default_size(600, 400)
-        self.set_border_width(10)
+
         self.PI = PulseInfo()
-        self.box = self.fill_dialog(devicelist)
+        self.set_default_size(400, 300)
+        self.set_border_width(10)
+
+        self.fill_dialog(devicelist)
 
         self.show_all()
         self.run()
+        self.destroy()
         # TODO: Implement PulseAudio sink setting
         print("PulseAudio sink setting not yet implemented")
-        # get children of gbox
-        # get the radio button that is active
-        # get the label of the radio button
-        # set the default sink to the label of the radio button
-        # self.set_default_sink(label)
-        children = self.box.get_children()
-        print(f"Got children: {children}")
-        for child in children:
-            print(f"Child: {child}")
-            if isinstance(child, Gtk.Box):
-                for c in child.get_children():
-                    print(f"Child: {c}")
-                    if isinstance(c, Gtk.RadioButton):
-                        if c.get_active():
-                            print(f"Found active radio button: {c}")
-                            # for cc in child.get_children():
-                            #     if isinstance(cc, Gtk.Label):
-                            #         print(f"Found label: {cc}")
-                            #         self.set_default_sink(cc.get_text())
-        self.destroy()
 
-    def set_default_sink(self, sink):
-        print(f"Setting_default_sink to {sink}")
-        self.PI.set_default_sink(sink)
 
-    def fill_dialog(self, devicelist) -> Gtk.Box:
+    def fill_dialog(self, devicelist):
+
         sinks = self.PI.get_sinks()
         print(f"Got sinks info: {sinks}")
 
@@ -135,26 +116,21 @@ class PulseDialog(Gtk.Dialog):
         mainbox = self.get_content_area()
         vbox = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=6)
         self.devicelist = devicelist
-        radio = None
+        print(self.devicelist)
         first_radio = None
         for k in sinks.keys():
             hbox = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=6)
-            lbl = Gtk.Label(label=k, xalign=Gtk.Align.START)
-            lbl.set_width_chars(32)
+            print(k['description'])
+            lbl = Gtk.Label(label=k)
             hbox.add(lbl)
             volume = Gtk.VolumeButton()
             volume.set_value(50)
             hbox.add(volume)
-            radio = Gtk.RadioButton.new_with_label_from_widget(first_radio, '')
+            radio = Gtk.RadioButton.new_with_label_from_widget(first_radio, _("Default"))
             if first_radio is None:
                 first_radio = radio
-            if sinks[k]['state']:
-                print(f"Setting radio to active: {radio}")
-                radio.set_active(True)
             hbox.add(radio)
             vbox.add(hbox)
-        # if no sink is running, set the last radio button to active
-        if not first_radio and radio:
-            radio.set_active(True)
+
         mainbox.add(vbox)
-        return vbox
+

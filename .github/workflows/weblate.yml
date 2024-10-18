@@ -1,0 +1,16 @@
+name: Weblate
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+      - env:
+          TOKEN: ${{ secrets.WEBLATE_KEY }}
+        run: "curl -F file=@po/blueman.pot -F method=source -H \"Authorization: Token $TOKEN\" https://hosted.weblate.org/api/translations/blueman/blueman/en/file/"
