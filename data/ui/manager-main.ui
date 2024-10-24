@@ -308,7 +308,6 @@
                 <property name="tooltip-text" translatable="yes">Connect audio output to the device</property>
                 <property name="is-important">True</property>
                 <property name="label" translatable="yes" comments="translators: toolbar item: keep it as short as possible">Connect</property>
-                <property name="icon-name">bluetooth-symbolic</property>
               </object>
               <packing>
                 <property name="expand">False</property>
