@@ -7,36 +7,6 @@
     <property name="can-focus">False</property>
     <property name="icon-name">dialog-information</property>
   </object>
-  <object class="GtkImage" id="im_exit">
-    <property name="visible">True</property>
-    <property name="can-focus">False</property>
-    <property name="icon-name">application-exit-symbolic</property>
-  </object>
-  <object class="GtkImage" id="im_help">
-    <property name="visible">True</property>
-    <property name="can-focus">False</property>
-    <property name="icon-name">help-about-symbolic</property>
-  </object>
-  <object class="GtkImage" id="im_plugins">
-    <property name="visible">True</property>
-    <property name="can-focus">False</property>
-    <property name="icon-name">application-x-addon-symbolic</property>
-  </object>
-  <object class="GtkImage" id="im_prefs">
-    <property name="visible">True</property>
-    <property name="can-focus">False</property>
-    <property name="icon-name">document-properties-symbolic</property>
-  </object>
-  <object class="GtkImage" id="im_search">
-    <property name="visible">True</property>
-    <property name="can-focus">False</property>
-    <property name="icon-name">edit-find-symbolic</property>
-  </object>
-  <object class="GtkImage" id="im_services">
-    <property name="visible">True</property>
-    <property name="can-focus">False</property>
-    <property name="icon-name">document-properties-symbolic</property>
-  </object>
   <object class="GtkApplicationWindow" id="manager_window">
     <property name="can-focus">False</property>
     <property name="title" translatable="yes">Bluetooth Devices</property>
@@ -47,237 +17,6 @@
         <property name="visible">True</property>
         <property name="can-focus">False</property>
         <property name="column-homogeneous">True</property>
-        <child>
-          <object class="GtkMenuBar" id="menu">
-            <property name="visible">True</property>
-            <property name="can-focus">False</property>
-            <property name="margin-top">24</property>
-            <property name="margin-bottom">23</property>
-            <child>
-              <object class="GtkMenuItem" id="item_adapter">
-                <property name="can-focus">False</property>
-                <property name="double-buffered">False</property>
-                <property name="margin-end">24</property>
-                <property name="label" translatable="yes">_Adapter</property>
-                <property name="use-underline">True</property>
-                <child type="submenu">
-                  <object class="GtkMenu">
-                    <property name="visible">True</property>
-                    <property name="can-focus">False</property>
-                    <child>
-                      <object class="GtkImageMenuItem" id="search_item">
-                        <property name="label" translatable="yes">_Search</property>
-                        <property name="can-focus">False</property>
-                        <property name="use-underline">True</property>
-                        <property name="image">im_search</property>
-                        <property name="use-stock">False</property>
-                      </object>
-                    </child>
-                    <child>
-                      <object class="GtkSeparatorMenuItem">
-                        <property name="visible">True</property>
-                        <property name="can-focus">False</property>
-                      </object>
-                    </child>
-                    <child>
-                      <object class="GtkSeparatorMenuItem">
-                        <property name="visible">True</property>
-                        <property name="can-focus">False</property>
-                      </object>
-                    </child>
-                    <child>
-                      <object class="GtkImageMenuItem" id="prefs_item">
-                        <property name="label" translatable="yes">_Preferences</property>
-                        <property name="sensitive">False</property>
-                        <property name="can-focus">False</property>
-                        <property name="use-underline">True</property>
-                        <property name="image">im_prefs</property>
-                        <property name="use-stock">False</property>
-                      </object>
-                    </child>
-                    <child>
-                      <object class="GtkSeparatorMenuItem">
-                        <property name="visible">True</property>
-                        <property name="can-focus">False</property>
-                      </object>
-                    </child>
-                    <child>
-                      <object class="GtkImageMenuItem" id="exit_item">
-                        <property name="label" translatable="yes">_Exit</property>
-                        <property name="visible">True</property>
-                        <property name="can-focus">False</property>
-                        <property name="use-underline">True</property>
-                        <property name="image">im_exit</property>
-                        <property name="use-stock">False</property>
-                      </object>
-                    </child>
-                  </object>
-                </child>
-              </object>
-            </child>
-            <child>
-              <object class="GtkMenuItem" id="item_device">
-                <property name="sensitive">False</property>
-                <property name="can-focus">False</property>
-                <property name="double-buffered">False</property>
-                <property name="margin-end">24</property>
-                <property name="label" translatable="yes">_Device</property>
-                <property name="use-underline">True</property>
-              </object>
-            </child>
-            <child>
-              <object class="GtkMenuItem" id="item_view">
-                <property name="sensitive">False</property>
-                <property name="can-focus">False</property>
-                <property name="double-buffered">False</property>
-                <property name="margin-end">24</property>
-                <property name="label" translatable="yes">_View</property>
-                <property name="use-underline">True</property>
-                <child type="submenu">
-                  <object class="GtkMenu">
-                    <property name="visible">True</property>
-                    <property name="can-focus">False</property>
-                    <child>
-                      <object class="GtkCheckMenuItem" id="show_tb_item">
-                        <property name="visible">True</property>
-                        <property name="can-focus">False</property>
-                        <property name="label" translatable="yes">Show _Toolbar</property>
-                        <property name="use-underline">True</property>
-                      </object>
-                    </child>
-                    <child>
-                      <object class="GtkCheckMenuItem" id="show_sb_item">
-                        <property name="visible">True</property>
-                        <property name="can-focus">False</property>
-                        <property name="label" translatable="yes">Show _Statusbar</property>
-                        <property name="use-underline">True</property>
-                      </object>
-                    </child>
-                    <child>
-                      <object class="GtkCheckMenuItem" id="hide_unnamed_item">
-                        <property name="visible">True</property>
-                        <property name="can-focus">False</property>
-                        <property name="label" translatable="yes">Hide _unnamed devices</property>
-                        <property name="use-underline">True</property>
-                      </object>
-                    </child>
-                    <child>
-                      <object class="GtkSeparatorMenuItem">
-                        <property name="visible">True</property>
-                        <property name="can-focus">False</property>
-                      </object>
-                    </child>
-                    <child>
-                      <object class="GtkMenuItem" id="sort_by_item">
-                        <property name="visible">True</property>
-                        <property name="can-focus">False</property>
-                        <property name="label" translatable="yes">S_ort By</property>
-                        <property name="use-underline">True</property>
-                        <child type="submenu">
-                          <object class="GtkMenu">
-                            <property name="visible">True</property>
-                            <property name="can-focus">False</property>
-                            <child>
-                              <object class="GtkRadioMenuItem" id="sort_name_item">
-                                <property name="visible">True</property>
-                                <property name="can-focus">False</property>
-                                <property name="label" translatable="yes">_Name</property>
-                                <property name="use-underline">True</property>
-                                <property name="draw-as-radio">True</property>
-                              </object>
-                            </child>
-                            <child>
-                              <object class="GtkRadioMenuItem" id="sort_added_item">
-                                <property name="visible">True</property>
-                                <property name="can-focus">False</property>
-                                <property name="label" translatable="yes">_Added</property>
-                                <property name="use-underline">True</property>
-                                <property name="draw-as-radio">True</property>
-                                <property name="group">sort_name_item</property>
-                              </object>
-                            </child>
-                            <child>
-                              <object class="GtkSeparatorMenuItem">
-                                <property name="visible">True</property>
-                                <property name="can-focus">False</property>
-                              </object>
-                            </child>
-                            <child>
-                              <object class="GtkCheckMenuItem" id="sort_descending_item">
-                                <property name="visible">True</property>
-                                <property name="can-focus">False</property>
-                                <property name="label" translatable="yes">_Descending</property>
-                                <property name="use-underline">True</property>
-                              </object>
-                            </child>
-                          </object>
-                        </child>
-                      </object>
-                    </child>
-                    <child>
-                      <object class="GtkImageMenuItem" id="plugins_item">
-                        <property name="label" translatable="yes">_Plugins</property>
-                        <property name="visible">True</property>
-                        <property name="can-focus">False</property>
-                        <property name="use-underline">True</property>
-                        <property name="image">im_plugins</property>
-                        <property name="use-stock">False</property>
-                      </object>
-                    </child>
-                    <child>
-                      <object class="GtkImageMenuItem" id="services_item">
-                        <property name="label" translatable="yes">_Local Services</property>
-                        <property name="visible">True</property>
-                        <property name="can-focus">False</property>
-                        <property name="use-underline">True</property>
-                        <property name="image">im_services</property>
-                        <property name="use-stock">False</property>
-                      </object>
-                    </child>
-                  </object>
-                </child>
-              </object>
-            </child>
-            <child>
-              <object class="GtkMenuItem" id="item_help">
-                <property name="visible">True</property>
-                <property name="can-focus">False</property>
-                <property name="label" translatable="yes">_Help</property>
-                <property name="use-underline">True</property>
-                <child type="submenu">
-                  <object class="GtkMenu">
-                    <property name="visible">True</property>
-                    <property name="can-focus">False</property>
-                    <child>
-                      <object class="GtkImageMenuItem" id="help">
-                        <property name="label" translatable="yes">_Help</property>
-                        <property name="visible">True</property>
-                        <property name="can-focus">False</property>
-                        <property name="use-underline">True</property>
-                        <property name="image">im_help</property>
-                        <property name="use-stock">False</property>
-                      </object>
-                    </child>
-                    <child>
-                      <object class="GtkImageMenuItem" id="faq">
-                        <property name="label" translatable="yes">_FAQ</property>
-                        <property name="visible">True</property>
-                        <property name="can-focus">False</property>
-                        <property name="use-underline">True</property>
-                        <property name="image">im_help</property>
-                        <property name="use-stock">False</property>
-                      </object>
-                    </child>
-                  </object>
-                </child>
-              </object>
-            </child>
-          </object>
-          <packing>
-            <property name="left-attach">0</property>
-            <property name="top-attach">0</property>
-          </packing>
-        </child>
         <child>
           <object class="GtkToolbar" id="toolbar">
             <property name="height-request">100</property>
@@ -306,6 +45,8 @@
                 <property name="sensitive">False</property>
                 <property name="can-focus">False</property>
                 <property name="tooltip-text" translatable="yes">Connect audio output to the device</property>
+                <property name="margin-left">24</property>
+                <property name="margin-right">24</property>
                 <property name="is-important">True</property>
                 <property name="label" translatable="yes" comments="translators: toolbar item: keep it as short as possible">Connect</property>
               </object>
@@ -331,6 +72,8 @@
                 <property name="sensitive">False</property>
                 <property name="can-focus">False</property>
                 <property name="tooltip-text" translatable="yes">Create pairing with the device</property>
+                <property name="margin-left">24</property>
+                <property name="margin-right">24</property>
                 <property name="is-important">True</property>
                 <property name="label" translatable="yes" comments="translators: toolbar item: keep it as short as possible">Pair</property>
                 <property name="icon-name">blueman-pair-symbolic</property>
@@ -347,6 +90,8 @@
                 <property name="sensitive">False</property>
                 <property name="can-focus">False</property>
                 <property name="tooltip-text" translatable="yes">Mark/Unmark this device as trusted</property>
+                <property name="margin-left">24</property>
+                <property name="margin-right">24</property>
                 <property name="is-important">True</property>
                 <property name="label" translatable="yes" comments="translators: toolbar item: keep it as short as possible">Trust</property>
                 <property name="icon-name">blueman-trust-symbolic</property>
@@ -363,6 +108,8 @@
                 <property name="sensitive">False</property>
                 <property name="can-focus">False</property>
                 <property name="tooltip-text" translatable="yes">Remove this device from the known devices list</property>
+                <property name="margin-left">24</property>
+                <property name="margin-right">24</property>
                 <property name="is-important">True</property>
                 <property name="label" translatable="yes" comments="translators: toolbar item: keep it as short as possible">Remove</property>
                 <property name="icon-name">list-remove-symbolic</property>
@@ -389,6 +136,8 @@
                 <property name="sensitive">False</property>
                 <property name="can-focus">False</property>
                 <property name="tooltip-text" translatable="yes">Set different audio output</property>
+                <property name="margin-left">24</property>
+                <property name="margin-right">24</property>
                 <property name="is-important">True</property>
                 <property name="label" translatable="yes" comments="translators: toolbar item: keep it as short as possible">Set Audio</property>
                 <property name="icon-name">audio-x-generic</property>
@@ -707,6 +456,45 @@
           <packing>
             <property name="left-attach">0</property>
             <property name="top-attach">3</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkToolbar">
+            <property name="height-request">100</property>
+            <property name="visible">True</property>
+            <property name="can-focus">False</property>
+            <child>
+              <object class="GtkToolButton" id="b_help">
+                <property name="width-request">100</property>
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <property name="tooltip-text" translatable="yes">Get help</property>
+                <property name="is-important">True</property>
+                <property name="label" translatable="yes" comments="translators: toolbar item: keep it as short as possible">Help</property>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="homogeneous">True</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkToolButton" id="b_help_faq">
+                <property name="width-request">100</property>
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <property name="tooltip-text" translatable="yes">FAQ</property>
+                <property name="is-important">True</property>
+                <property name="label" translatable="yes" comments="translators: toolbar item: keep it as short as possible">FAQ</property>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="homogeneous">True</property>
+              </packing>
+            </child>
+          </object>
+          <packing>
+            <property name="left-attach">0</property>
+            <property name="top-attach">0</property>
           </packing>
         </child>
       </object>

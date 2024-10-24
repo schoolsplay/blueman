@@ -31,82 +31,82 @@ class ManagerMenu:
         self._adapters_group: Sequence[Gtk.RadioMenuItem] = []
         self._insert_adapter_item_pos = 2
 
-        self.item_adapter = self.blueman.builder.get_widget("item_adapter", Gtk.MenuItem)
-        self.item_device = self.blueman.builder.get_widget("item_device", Gtk.MenuItem)
-
-        self.item_view = self.blueman.builder.get_widget("item_view", Gtk.MenuItem)
-        self.item_help = self.blueman.builder.get_widget("item_help", Gtk.MenuItem)
+        # self.item_adapter = self.blueman.builder.get_widget("item_adapter", Gtk.MenuItem)
+        # self.item_device = self.blueman.builder.get_widget("item_device", Gtk.MenuItem)
+        #
+        # self.item_view = self.blueman.builder.get_widget("item_view", Gtk.MenuItem)
+        # self.item_help = self.blueman.builder.get_widget("item_help", Gtk.MenuItem)
 
         # stas: removed this menu item in the gui
         # report_item = blueman.builder.get_widget("report", Gtk.ImageMenuItem)
         # report_item.connect("activate", lambda x: launch(f"xdg-open {WEBSITE}/issues"))
 
 
-        help_item = blueman.builder.get_widget("help", Gtk.ImageMenuItem)
-        assert self.blueman.window is not None
-        widget = self.blueman.window.get_toplevel()
-        assert isinstance(widget, Gtk.Window)
-        window = widget
-        help_item.connect("activate", lambda x: show_about_dialog('Blueman ' + _('Device Manager'), parent=window))
-
-        faq_item = blueman.builder.get_widget("faq", Gtk.ImageMenuItem)
-        faq_item.connect("activate", lambda x: show_faq_dialog(parent=window))
-
-        item_toolbar = blueman.builder.get_widget("show_tb_item", Gtk.CheckMenuItem)
-        self.blueman.Config.bind("show-toolbar", item_toolbar, "active", Gio.SettingsBindFlags.DEFAULT)
-
-        item_statusbar = blueman.builder.get_widget("show_sb_item", Gtk.CheckMenuItem)
-        self.blueman.Config.bind("show-statusbar", item_statusbar, "active", Gio.SettingsBindFlags.DEFAULT)
-
-        item_unnamed = blueman.builder.get_widget("hide_unnamed_item", Gtk.CheckMenuItem)
-        self.blueman.Config.bind("hide-unnamed", item_unnamed, "active", Gio.SettingsBindFlags.DEFAULT)
-
-        self.device_menu: Optional[ManagerDeviceMenu] = None
-
-        self._sort_alias_item = blueman.builder.get_widget("sort_name_item", Gtk.CheckMenuItem)
-        self._sort_timestamp_item = blueman.builder.get_widget("sort_added_item", Gtk.CheckMenuItem)
-
-        sort_config = self.Config['sort-by']
-        if sort_config == "alias":
-            self._sort_alias_item.props.active = True
-        else:
-            self._sort_timestamp_item.props.active = True
-
-        self._sort_type_item = blueman.builder.get_widget("sort_descending_item", Gtk.CheckMenuItem)
-
-        if self.Config['sort-order'] == "ascending":
-            self._sort_type_item.props.active = False
-        else:
-            self._sort_type_item.props.active = True
-
-        item_plugins = blueman.builder.get_widget("plugins_item", Gtk.ImageMenuItem)
-        item_plugins.connect('activate', self._on_plugin_dialog_activate)
-
-        item_services = blueman.builder.get_widget("services_item", Gtk.ImageMenuItem)
-        item_services.connect('activate', lambda *args: launch("blueman-services", name=_("Service Preferences")))
-
-        self.Search = search_item = blueman.builder.get_widget("search_item", Gtk.ImageMenuItem)
-        search_item.connect("activate", lambda x: self.blueman.inquiry())
-
-        self._adapter_settings = blueman.builder.get_widget("prefs_item", Gtk.ImageMenuItem)
-        self._adapter_settings.connect("activate", lambda x: self.blueman.adapter_properties())
-
-        exit_item = blueman.builder.get_widget("exit_item", Gtk.ImageMenuItem)
-        exit_item.connect("activate", lambda x: self.blueman.quit())
-
-        self._manager = Manager()
-        self._manager.connect_signal("adapter-added", self.on_adapter_added)
-        self._manager.connect_signal("adapter-removed", self.on_adapter_removed)
-
-        blueman.List.connect("device-selected", self.on_device_selected)
-
-        for adapter in self._manager.get_adapters():
-            self.on_adapter_added(None, adapter.get_object_path())
-
-        self.Config.connect("changed", self._on_settings_changed)
-        self._sort_alias_item.connect("activate", self._on_sorting_changed, "alias")
-        self._sort_timestamp_item.connect("activate", self._on_sorting_changed, "timestamp")
-        self._sort_type_item.connect("activate", self._on_sorting_changed, "sort-type")
+        # help_item = blueman.builder.get_widget("help", Gtk.ImageMenuItem)
+        # assert self.blueman.window is not None
+        # widget = self.blueman.window.get_toplevel()
+        # assert isinstance(widget, Gtk.Window)
+        # window = widget
+        # help_item.connect("activate", lambda x: show_about_dialog('Blueman ' + _('Device Manager'), parent=window))
+        #
+        # faq_item = blueman.builder.get_widget("faq", Gtk.ImageMenuItem)
+        # faq_item.connect("activate", lambda x: show_faq_dialog(parent=window))
+        #
+        # item_toolbar = blueman.builder.get_widget("show_tb_item", Gtk.CheckMenuItem)
+        # self.blueman.Config.bind("show-toolbar", item_toolbar, "active", Gio.SettingsBindFlags.DEFAULT)
+        #
+        # item_statusbar = blueman.builder.get_widget("show_sb_item", Gtk.CheckMenuItem)
+        # self.blueman.Config.bind("show-statusbar", item_statusbar, "active", Gio.SettingsBindFlags.DEFAULT)
+        #
+        # item_unnamed = blueman.builder.get_widget("hide_unnamed_item", Gtk.CheckMenuItem)
+        # self.blueman.Config.bind("hide-unnamed", item_unnamed, "active", Gio.SettingsBindFlags.DEFAULT)
+        #
+        # self.device_menu: Optional[ManagerDeviceMenu] = None
+        #
+        # self._sort_alias_item = blueman.builder.get_widget("sort_name_item", Gtk.CheckMenuItem)
+        # self._sort_timestamp_item = blueman.builder.get_widget("sort_added_item", Gtk.CheckMenuItem)
+        #
+        # sort_config = self.Config['sort-by']
+        # if sort_config == "alias":
+        #     self._sort_alias_item.props.active = True
+        # else:
+        #     self._sort_timestamp_item.props.active = True
+        #
+        # self._sort_type_item = blueman.builder.get_widget("sort_descending_item", Gtk.CheckMenuItem)
+        #
+        # if self.Config['sort-order'] == "ascending":
+        #     self._sort_type_item.props.active = False
+        # else:
+        #     self._sort_type_item.props.active = True
+        #
+        # item_plugins = blueman.builder.get_widget("plugins_item", Gtk.ImageMenuItem)
+        # item_plugins.connect('activate', self._on_plugin_dialog_activate)
+        #
+        # item_services = blueman.builder.get_widget("services_item", Gtk.ImageMenuItem)
+        # item_services.connect('activate', lambda *args: launch("blueman-services", name=_("Service Preferences")))
+        #
+        # self.Search = search_item = blueman.builder.get_widget("search_item", Gtk.ImageMenuItem)
+        # search_item.connect("activate", lambda x: self.blueman.inquiry())
+        #
+        # self._adapter_settings = blueman.builder.get_widget("prefs_item", Gtk.ImageMenuItem)
+        # self._adapter_settings.connect("activate", lambda x: self.blueman.adapter_properties())
+        #
+        # exit_item = blueman.builder.get_widget("exit_item", Gtk.ImageMenuItem)
+        # exit_item.connect("activate", lambda x: self.blueman.quit())
+        #
+        # self._manager = Manager()
+        # self._manager.connect_signal("adapter-added", self.on_adapter_added)
+        # self._manager.connect_signal("adapter-removed", self.on_adapter_removed)
+        #
+        # blueman.List.connect("device-selected", self.on_device_selected)
+        #
+        # for adapter in self._manager.get_adapters():
+        #     self.on_adapter_added(None, adapter.get_object_path())
+        #
+        # self.Config.connect("changed", self._on_settings_changed)
+        # self._sort_alias_item.connect("activate", self._on_sorting_changed, "alias")
+        # self._sort_timestamp_item.connect("activate", self._on_sorting_changed, "timestamp")
+        # self._sort_type_item.connect("activate", self._on_sorting_changed, "sort-type")
 
     def _on_sorting_changed(self, btn: Gtk.CheckMenuItem, sort_opt: str) -> None:
         if sort_opt == 'alias' and btn.props.active:
